@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
 const isValidCoordinates = require('is-valid-coordinates');
-
+const axios = require('axios');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -36,15 +36,18 @@ app.locals.locations = initialLocations;
 app.get('/locations', (request, response) =>
   response.send({ locations: app.locals.locations }),
 );
-app.post('/locations', (request, response) => {
+app.post('/locations', async (request, response) => {
   app.locals.idIndex++;
-  if (!isValidCoordinates(Number(request.body.lng), Number(request.body.lat)))
-    throw new Error('Invalid Coordinates');
+  const getCoords = await getCoordinates(request.body.name);
+  const coords = getCoords.data.filter(result => result.type === 'city');
+  if (!isValidCoordinates(Number(request.body.lng), Number(request.body.lat))) {
+    response.status(400).json({ error: 'Invalid Coordinates' });
+  }
   app.locals.locations.push({
     id: `id${app.locals.idIndex}`,
     name: request.body.name,
-    lat: Number(request.body.lat),
-    lng: Number(request.body.lng),
+    lat: Number(coords[coords.length - 1].lat),
+    lng: Number(coords[coords.length - 1].lon),
   });
   response.send({ locations: app.locals.locations });
 });
@@ -61,3 +64,10 @@ const portNumber = process.env.PORT || 3001;
 app.listen(portNumber, () => {
   console.log('RrrarrrrRrrrr server alive on port 3001');
 });
+
+async function getCoordinates(locationName) {
+  const result = await axios.get(
+    `https://nominatim.openstreetmap.org/search?q=${locationName}&format=json`,
+  );
+  return result;
+}
