@@ -32,7 +32,13 @@ const initialLocations = [
 app.locals.idIndex = 3;
 app.locals.locations = initialLocations;
 
-app.get('/locations', (request, response) => response.send({ locations: app.locals.locations }));
+app.get('/locations', (request, response) =>
+  response.send({ locations: app.locals.locations }),
+);
+app.post('/locations', (request, response) => {
+  app.locals.locations.push(request.body);
+  response.send({ locations: app.locals.locations });
+});
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
