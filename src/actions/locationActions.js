@@ -8,6 +8,13 @@ const storeAllLocations = (locations) => {
   };
 };
 
+const activateMarker = (location) => {
+  return {
+    type: 'ACTIVATE_MARKER',
+    data: location
+  }
+}
+
 const fetchAllLocations = () => {
   return (dispatch) => {
     return fetch('/locations', {
@@ -22,4 +29,4 @@ const fetchAllLocations = () => {
 };
 
 
-export { fetchAllLocations }
+export { fetchAllLocations, activateMarker }

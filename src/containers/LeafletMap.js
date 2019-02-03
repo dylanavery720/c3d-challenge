@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, ZoomControl } from 'react-leaflet';
+import { Map, TileLayer, ZoomControl, Polygon } from 'react-leaflet';
 import AllMarkers from './AllMarkers'
 
 class LeafletMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
     };
   }
   render() {
+    console.log(this.props, 'p')
     return (
       <div className="map-container">
         <Map
@@ -29,6 +29,9 @@ class LeafletMap extends Component {
             position="bottomright"
           />
           <AllMarkers />
+          <Polygon 
+            positions={this.props.activeMarkers}
+          />
         </Map>
       </div>
     );

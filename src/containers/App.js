@@ -5,7 +5,8 @@ import { fetchAllLocations } from '../actions/locationActions';
 import App from '../components/App';
 
 const mapStateToProps = (state) => {
-  return { locations: state.Locations.data };
+  console.log(state, 'sg')
+  return { locations: state.Locations.data, activeMarkers: state.ActiveMarkers.data };
 };
 
 const mapDispatchToProps = (dispatch) => {

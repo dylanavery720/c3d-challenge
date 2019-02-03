@@ -4,6 +4,18 @@ import { connect } from 'react-redux';
 import MapMarker from './Marker'
 
 class AllMarkers extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      activeMarkers: []
+    };
+  }
+
+  onClick(e, location) {
+    // e.preventDefault();
+    this.props.activateMarker(location)
+  }
+
   render() {
     const markerArray = this.props.locations.map((marker, i) => {
       return (
@@ -11,6 +23,7 @@ class AllMarkers extends Component {
           key={i}
           location={[+marker.lat, +marker.lng]}
           name={marker.name}
+          onClick={(e) => this.onClick(e, marker)}
         />
       )
     })
