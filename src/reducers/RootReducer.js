@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import Locations from './LocationsReducer';
-import ActiveMarkers from './ActiveMarkersReducer'
+import ActiveMarkers from './ActiveMarkersReducer';
 
 const RootReducer = combineReducers({
   Locations,
-  ActiveMarkers
+  ActiveMarkers,
 });
 
 export default RootReducer;

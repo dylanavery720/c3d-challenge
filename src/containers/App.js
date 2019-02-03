@@ -4,12 +4,18 @@ import '../style/App.css';
 import { fetchAllLocations } from '../actions/locationActions';
 import App from '../components/App';
 
-const mapStateToProps = (state) => {
-  return { locations: state.Locations.data, activeMarkers: state.ActiveMarkers.data };
+const mapStateToProps = state => {
+  return {
+    locations: state.Locations.data,
+    activeMarkers: state.ActiveMarkers.data,
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return bindActionCreators({ fetchAllLocations }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
