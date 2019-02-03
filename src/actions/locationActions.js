@@ -44,8 +44,16 @@ const saveLocation = location => {
       },
       body: JSON.stringify(location),
     })
-      .then(locations => locations.json())
-      .then(json => dispatch(storeAllLocations(json)));
+      .then(locations => {
+        if (locations.ok) {
+          return locations.json();
+        } else {
+          console.log(locations);
+          throw new Error(locations.error);
+        }
+      })
+      .then(json => dispatch(storeAllLocations(json)))
+      .catch(error => console.log(error));
   };
 };
 
