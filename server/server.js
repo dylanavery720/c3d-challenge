@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const path = require('path');
+const isValidCoordinates = require('is-valid-coordinates');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -32,7 +33,21 @@ const initialLocations = [
 app.locals.idIndex = 3;
 app.locals.locations = initialLocations;
 
-app.get('/locations', (request, response) => response.send({ locations: app.locals.locations }));
+app.get('/locations', (request, response) =>
+  response.send({ locations: app.locals.locations }),
+);
+app.post('/locations', (request, response) => {
+  app.locals.idIndex++;
+  if (!isValidCoordinates(Number(request.body.lng), Number(request.body.lat)))
+    throw new Error('Invalid Coordinates');
+  app.locals.locations.push({
+    id: `id${app.locals.idIndex}`,
+    name: request.body.name,
+    lat: Number(request.body.lat),
+    lng: Number(request.body.lng),
+  });
+  response.send({ locations: app.locals.locations });
+});
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 

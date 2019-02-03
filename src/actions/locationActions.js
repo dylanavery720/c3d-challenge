@@ -34,4 +34,27 @@ const fetchAllLocations = () => {
   };
 };
 
-export { fetchAllLocations, activateMarker, deactivateMarker };
+const saveLocation = location => {
+  return dispatch => {
+    return fetch('/locations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(location),
+    })
+      .then(locations => {
+        if (locations.ok) {
+          return locations.json();
+        } else {
+          console.log(locations);
+          throw new Error(locations.error);
+        }
+      })
+      .then(json => dispatch(storeAllLocations(json)))
+      .catch(error => console.log(error));
+  };
+};
+
+export { fetchAllLocations, activateMarker, deactivateMarker, saveLocation };

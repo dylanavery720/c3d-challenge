@@ -1,9 +1,9 @@
 /*eslint-disable no-unused-vars*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import AllMarkers from '../components/AllMarkers';
 import { activateMarker, deactivateMarker } from '../actions/locationActions';
-import { bindActionCreators } from 'redux';
 
 const mapStateToProps = state => {
   return {

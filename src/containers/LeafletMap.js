@@ -8,7 +8,6 @@ class LeafletMap extends Component {
     this.state = {};
   }
   render() {
-    console.log(this.props, 'p');
     return (
       <div className="map-container">
         <Map
