@@ -39,15 +39,17 @@ app.get('/locations', (request, response) =>
 app.post('/locations', async (request, response) => {
   app.locals.idIndex++;
   const getCoords = await getCoordinates(request.body.name);
-  const coords = getCoords.data.filter(result => result.type === 'city');
+  let coords = getCoords.data.filter(result => result.type === 'city');
+  coords = coords[coords.length-1]
+  if(!coords) coords = request.body
   if (!isValidCoordinates(Number(request.body.lng), Number(request.body.lat))) {
     response.status(400).json({ error: 'Invalid Coordinates' });
   }
   app.locals.locations.push({
     id: `id${app.locals.idIndex}`,
     name: request.body.name,
-    lat: Number(coords[coords.length - 1].lat),
-    lng: Number(coords[coords.length - 1].lon),
+    lat: Number(coords.lat),
+    lng: Number(coords.lon),
   });
   response.send({ locations: app.locals.locations });
 });
