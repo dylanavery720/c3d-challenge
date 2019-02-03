@@ -1,13 +1,13 @@
-import { connect } from 'react-redux'
-import Form from '../components/Form'
+import { connect } from 'react-redux';
+import Form from '../components/Form';
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    saveLocation: (location) => {
+    saveLocation: location => {
       dispatch({
         type: 'SAVE_LOCATION',
         data: location,
@@ -16,4 +16,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Form);

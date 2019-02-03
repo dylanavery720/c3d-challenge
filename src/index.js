@@ -8,20 +8,19 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import RootReducer from './reducers/RootReducer';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   RootReducer,
   {},
-  composeEnhancers(
-    applyMiddleware(thunk)
-  )
-)
+  composeEnhancers(applyMiddleware(thunk)),
+);
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
 
-  , document.getElementById('root'));
+  document.getElementById('root'),
+);
 registerServiceWorker();

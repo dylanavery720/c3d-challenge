@@ -1,15 +1,28 @@
 require('isomorphic-fetch');
 
-
-const storeAllLocations = (locations) => {
+const storeAllLocations = locations => {
   return {
     type: 'STORE_LOCATIONS',
     data: locations.locations,
   };
 };
 
+const activateMarker = location => {
+  return {
+    type: 'ACTIVATE_MARKER',
+    data: location,
+  };
+};
+
+const deactivateMarker = location => {
+  return {
+    type: 'DEACTIVATE_MARKER',
+    data: location,
+  };
+};
+
 const fetchAllLocations = () => {
-  return (dispatch) => {
+  return dispatch => {
     return fetch('/locations', {
       headers: {
         'Content-Type': 'application/json',
@@ -21,5 +34,4 @@ const fetchAllLocations = () => {
   };
 };
 
-
-export { fetchAllLocations }
+export { fetchAllLocations, activateMarker, deactivateMarker };

@@ -1,9 +1,18 @@
 /*eslint-disable no-unused-vars*/
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import MapMarker from './Marker'
+import MapMarker from './Marker';
 
 class AllMarkers extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  onClick(e, location) {
+    this.props.activateMarker(location);
+  }
+
   render() {
     const markerArray = this.props.locations.map((marker, i) => {
       return (
@@ -11,15 +20,12 @@ class AllMarkers extends Component {
           key={i}
           location={[+marker.lat, +marker.lng]}
           name={marker.name}
+          onClick={e => this.onClick(e, marker)}
         />
-      )
-    })
+      );
+    });
 
-    return (
-      <div className="paths-container">
-        {markerArray}
-      </div>
-    );
+    return <div className="paths-container">{markerArray}</div>;
   }
 }
 
