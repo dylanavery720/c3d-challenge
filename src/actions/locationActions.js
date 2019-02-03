@@ -48,8 +48,7 @@ const saveLocation = location => {
         if (locations.ok) {
           return locations.json();
         } else {
-          console.log(locations);
-          throw new Error(locations.error);
+          throw new Error(locations.statusText, 'Invalid Coordinates');
         }
       })
       .then(json => dispatch(storeAllLocations(json)))

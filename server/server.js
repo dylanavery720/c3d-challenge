@@ -40,8 +40,9 @@ app.post('/locations', async (request, response) => {
   app.locals.idIndex++;
   const getCoords = await getCoordinates(request.body.name);
   const coords = getCoords.data.filter(result => result.type === 'city');
-  if (!isValidCoordinates(Number(request.body.lng), Number(request.body.lat)))
-    throw new Error('Invalid Coordinates');
+  if (!isValidCoordinates(Number(request.body.lng), Number(request.body.lat))) {
+    response.status(400).json({ error: 'Invalid Coordinates' });
+  }
   app.locals.locations.push({
     id: `id${app.locals.idIndex}`,
     name: request.body.name,
